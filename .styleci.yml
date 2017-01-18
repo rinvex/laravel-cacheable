@@ -1,0 +1,11 @@
+preset: recommended
+risky: false
+linting: true
+
+enabled:
+  - not_operator_with_successor_space
+  - no_short_echo_tag
+
+disabled:
+  - ordered_imports
+  - phpdoc_no_package
