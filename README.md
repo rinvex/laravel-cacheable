@@ -2,8 +2,6 @@
 
 **Rinvex Cacheable** is a granular, intuitive, and fluent caching system for eloquent models. Simple, but yet powerful, plug-n-play with no hassle.
 
-What this package do -technically- caching eloquent query passing through the `get` method, whatever it is and it's smart enough to indicated any conditions, limit, offset, wheres, orders, groups, ..etc and take that criteria into account when caching and checking for cached version. Also by default any create, update, or delete event will flush all cache for that specific model. Awesome, right?
-
 [![Packagist](https://img.shields.io/packagist/v/rinvex/cacheable.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/cacheable)
 [![VersionEye Dependencies](https://img.shields.io/versioneye/d/php/rinvex:cacheable.svg?label=Dependencies&style=flat-square)](https://www.versioneye.com/php/rinvex:cacheable/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/cacheable.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/cacheable/)
@@ -12,6 +10,8 @@ What this package do -technically- caching eloquent query passing through the `g
 [![SensioLabs Insight](https://img.shields.io/sensiolabs/i/868c1c04-d4ad-4dcc-a396-03cbb5a1264e.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/868c1c04-d4ad-4dcc-a396-03cbb5a1264e)
 [![StyleCI](https://styleci.io/repos/79321486/shield)](https://styleci.io/repos/79321486)
 [![License](https://img.shields.io/packagist/l/rinvex/cacheable.svg?label=License&style=flat-square)](https://github.com/rinvex/cacheable/blob/develop/LICENSE)
+
+What this package do -technically- caching eloquent query passing through the `get` method, whatever it is and it's smart enough to indicated any conditions, limit, offset, wheres, orders, groups, ..etc and take that criteria into account when caching and checking for cached version. Also by default any create, update, or delete event will flush all cache for that specific model. It uses default Laravel caching system, and utilizes whatever cache driver you are using. Awesome, right?
 
 
 ## Installation & Usage
@@ -25,7 +25,7 @@ What this package do -technically- caching eloquent query passing through the `g
 
 3. Seriously, that's it!
 
-Check the [`CacheableEloquent`](blob/master/src/CacheableEloquent.php) source code for more awesome stuff if you need advanced control.
+Check the [`CacheableEloquent`](src/CacheableEloquent.php) source code for more awesome stuff if you need advanced control.
 
 
 ## Changelog
