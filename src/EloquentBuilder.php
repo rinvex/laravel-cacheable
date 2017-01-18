@@ -12,7 +12,7 @@ class EloquentBuilder extends Builder
     /**
      * Execute the query as a "select" statement.
      *
-     * @param  array $columns
+     * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */

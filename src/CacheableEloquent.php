@@ -64,8 +64,8 @@ trait CacheableEloquent
     /**
      * Fire the given event for the model.
      *
-     * @param  string  $event
-     * @param  bool  $halt
+     * @param string $event
+     * @param bool   $halt
      *
      * @return mixed
      */
@@ -74,8 +74,8 @@ trait CacheableEloquent
     /**
      * Register an updated model event with the dispatcher.
      *
-     * @param  \Closure|string $callback
-     * @param  int             $priority
+     * @param \Closure|string $callback
+     * @param int             $priority
      *
      * @return void
      */
@@ -94,8 +94,8 @@ trait CacheableEloquent
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string $callback
-     * @param  int             $priority
+     * @param \Closure|string $callback
+     * @param int             $priority
      *
      * @return void
      */
@@ -334,22 +334,22 @@ trait CacheableEloquent
     {
         $query = $builder->getQuery();
         $vars = [
-            'aggregate' => $query->aggregate,
-            'columns' => $query->columns,
-            'distinct' => $query->distinct,
-            'from' => $query->from,
-            'joins' => $query->joins,
-            'wheres' => $query->wheres,
-            'groups' => $query->groups,
-            'havings' => $query->havings,
-            'orders' => $query->orders,
-            'limit' => $query->limit,
-            'offset' => $query->offset,
-            'unions' => $query->unions,
-            'unionLimit' => $query->unionLimit,
+            'aggregate'   => $query->aggregate,
+            'columns'     => $query->columns,
+            'distinct'    => $query->distinct,
+            'from'        => $query->from,
+            'joins'       => $query->joins,
+            'wheres'      => $query->wheres,
+            'groups'      => $query->groups,
+            'havings'     => $query->havings,
+            'orders'      => $query->orders,
+            'limit'       => $query->limit,
+            'offset'      => $query->offset,
+            'unions'      => $query->unions,
+            'unionLimit'  => $query->unionLimit,
             'unionOffset' => $query->unionOffset,
             'unionOrders' => $query->unionOrders,
-            'lock' => $query->lock,
+            'lock'        => $query->lock,
         ];
 
         return md5(json_encode([
@@ -405,7 +405,7 @@ trait CacheableEloquent
     /**
      * Create a new Eloquent query builder for the model.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
