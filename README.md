@@ -9,8 +9,8 @@ What this package do -technically- caching eloquent query passing through the `g
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/cacheable.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/cacheable/)
 [![Code Climate](https://img.shields.io/codeclimate/github/rinvex/cacheable.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/cacheable)
 [![Travis](https://img.shields.io/travis/rinvex/cacheable.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/cacheable)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/f2dca242-eb65-4bcc-8481-cd27ea16c804.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/f2dca242-eb65-4bcc-8481-cd27ea16c804)
-[![StyleCI](https://styleci.io/repos/66037019/shield)](https://styleci.io/repos/66037019)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/868c1c04-d4ad-4dcc-a396-03cbb5a1264e.svg?label=SensioLabs&style=flat-square)](https://insight.sensiolabs.com/projects/868c1c04-d4ad-4dcc-a396-03cbb5a1264e)
+[![StyleCI](https://styleci.io/repos/79321486/shield)](https://styleci.io/repos/79321486)
 [![License](https://img.shields.io/packagist/l/rinvex/cacheable.svg?label=License&style=flat-square)](https://github.com/rinvex/cacheable/blob/develop/LICENSE)
 
 
