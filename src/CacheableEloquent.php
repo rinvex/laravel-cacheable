@@ -27,18 +27,25 @@ trait CacheableEloquent
      *
      * @var \Illuminate\Contracts\Container\Container
      */
-    protected $container;
+    protected static $container;
 
     /**
      * The methods to clear cache on.
      *
      * @var array
      */
-    protected $cacheClearOn = [
+    protected static $cacheClearOn = [
         'create',
         'update',
         'delete',
     ];
+
+    /**
+     * Indicate if the model cache clear is enabled.
+     *
+     * @var bool
+     */
+    protected static $cacheClearEnabled = true;
 
     /**
      * The model cache driver.
@@ -53,23 +60,6 @@ trait CacheableEloquent
      * @var float|int
      */
     protected $cacheLifetime = -1;
-
-    /**
-     * Indicate if the model cache clear is enabled.
-     *
-     * @var bool
-     */
-    protected $cacheClearEnabled = true;
-
-    /**
-     * Fire the given event for the model.
-     *
-     * @param string $event
-     * @param bool   $halt
-     *
-     * @return mixed
-     */
-    abstract protected function fireModelEvent($event, $halt = true);
 
     /**
      * Register an updated model event with the dispatcher.
@@ -106,23 +96,23 @@ trait CacheableEloquent
      *
      * @return void
      */
-    public static function bootAbstractCacheable()
+    public static function bootCacheableEloquent()
     {
         static::updated(function (Model $cachedModel) {
-            if ($cachedModel->isCacheClearEnabled() && in_array('update', $cachedModel->cacheClearOn)) {
-                $cachedModel->forgetCache();
+            if ($cachedModel::isCacheClearEnabled() && in_array('update', $cachedModel::$cacheClearOn)) {
+                $cachedModel::forgetCache();
             }
         });
 
         static::created(function (Model $cachedModel) {
-            if ($cachedModel->isCacheClearEnabled() && in_array('create', $cachedModel->cacheClearOn)) {
-                $cachedModel->forgetCache();
+            if ($cachedModel::isCacheClearEnabled() && in_array('create', $cachedModel::$cacheClearOn)) {
+                $cachedModel::forgetCache();
             }
         });
 
         static::deleted(function (Model $cachedModel) {
-            if ($cachedModel->isCacheClearEnabled() && in_array('delete', $cachedModel->cacheClearOn)) {
-                $cachedModel->forgetCache();
+            if ($cachedModel::isCacheClearEnabled() && in_array('delete', $cachedModel::$cacheClearOn)) {
+                $cachedModel::forgetCache();
             }
         });
     }
@@ -132,13 +122,11 @@ trait CacheableEloquent
      *
      * @param \Illuminate\Contracts\Container\Container $container
      *
-     * @return $this
+     * @return void
      */
-    public function setContainer(Container $container)
+    public static function setContainer(Container $container)
     {
-        $this->container = $container;
-
-        return $this;
+        static::$container = $container;
     }
 
     /**
@@ -148,26 +136,26 @@ trait CacheableEloquent
      *
      * @return mixed
      */
-    public function getContainer($service = null)
+    public static function getContainer($service = null)
     {
-        return is_null($service) ? ($this->container ?: app()) : ($this->container[$service] ?: app($service));
+        return is_null($service) ? (static::$container ?: app()) : (static::$container[$service] ?: app($service));
     }
 
     /**
      * Store the given cache key for the given model by mimicking cache tags.
      *
-     * @param string $model
+     * @param string $modelName
      * @param string $cacheKey
      *
      * @return void
      */
-    protected function storeCacheKey(string $model, string $cacheKey)
+    protected static function storeCacheKey(string $modelName, string $cacheKey)
     {
         $keysFile = storage_path('framework/cache/rinvex.cacheable.json');
-        $cacheKeys = $this->getCacheKeys($keysFile);
+        $cacheKeys = static::getCacheKeys($keysFile);
 
-        if (! isset($cacheKeys[$model]) || ! in_array($cacheKey, $cacheKeys[$model])) {
-            $cacheKeys[$model][] = $cacheKey;
+        if (! isset($cacheKeys[$modelName]) || ! in_array($cacheKey, $cacheKeys[$modelName])) {
+            $cacheKeys[$modelName][] = $cacheKey;
             file_put_contents($keysFile, json_encode($cacheKeys));
         }
     }
@@ -179,7 +167,7 @@ trait CacheableEloquent
      *
      * @return array
      */
-    protected function getCacheKeys($file)
+    protected static function getCacheKeys($file)
     {
         if (! file_exists($file)) {
             file_put_contents($file, null);
@@ -191,20 +179,20 @@ trait CacheableEloquent
     /**
      * Flush cache keys of the given model by mimicking cache tags.
      *
-     * @param string $model
+     * @param string $modelName
      *
      * @return array
      */
-    protected function flushCacheKeys(string $model): array
+    protected static function flushCacheKeys(string $modelName): array
     {
         $flushedKeys = [];
         $keysFile = storage_path('framework/cache/rinvex.cacheable.json');
-        $cacheKeys = $this->getCacheKeys($keysFile);
+        $cacheKeys = static::getCacheKeys($keysFile);
 
-        if (isset($cacheKeys[$model])) {
-            $flushedKeys = $cacheKeys[$model];
+        if (isset($cacheKeys[$modelName])) {
+            $flushedKeys = $cacheKeys[$modelName];
 
-            unset($cacheKeys[$model]);
+            unset($cacheKeys[$modelName]);
 
             file_put_contents($keysFile, json_encode($cacheKeys));
         }
@@ -261,51 +249,59 @@ trait CacheableEloquent
     }
 
     /**
-     * Enable model cache clear.
-     *
-     * @param bool $status
-     *
-     * @return $this
-     */
-    public function enableCacheClear($status = true)
-    {
-        $this->cacheClearEnabled = $status;
-
-        return $this;
-    }
-
-    /**
      * Determine if model cache clear is enabled.
      *
      * @return bool
      */
-    public function isCacheClearEnabled()
+    public static function isCacheClearEnabled()
     {
-        return $this->cacheClearEnabled;
+        return static::$cacheClearEnabled;
     }
 
     /**
      * Forget the model cache.
      *
-     * @return $this
+     * @return void
      */
-    public function forgetCache()
+    public static function forgetCache()
     {
-        if ($this->getCacheLifetime()) {
-            // Flush cache tags
-            if (method_exists($this->getContainer('cache')->getStore(), 'tags')) {
-                $this->getContainer('cache')->tags(static::class)->flush();
-            } else {
-                // Flush cache keys, then forget actual cache
-                foreach ($this->flushCacheKeys(static::class) as $cacheKey) {
-                    $this->getContainer('cache')->forget($cacheKey);
-                }
-            }
+        static::fireCacheFlushEvent('cache.flushing');
 
-            $this->fireModelEvent('.cache.flushed', false);
+        // Flush cache tags
+        if (method_exists(static::getContainer('cache')->getStore(), 'tags')) {
+            static::getContainer('cache')->tags(static::class)->flush();
+        } else {
+            // Flush cache keys, then forget actual cache
+            foreach (static::flushCacheKeys(static::class) as $cacheKey) {
+                static::getContainer('cache')->forget($cacheKey);
+            }
         }
 
-        return $this;
+        static::fireCacheFlushEvent('cache.flushed', false);
+    }
+
+    /**
+     * Fire the given event for the model.
+     *
+     * @param  string  $event
+     * @param  bool  $halt
+     *
+     * @return mixed
+     */
+    protected static function fireCacheFlushEvent($event, $halt = true)
+    {
+        if (! isset(static::$dispatcher)) {
+            return true;
+        }
+
+        // We will append the names of the class to the event to distinguish it from
+        // other model events that are fired, allowing us to listen on each model
+        // event set individually instead of catching event for all the models.
+        $event = "eloquent.{$event}: ".static::class;
+
+        $method = $halt ? 'until' : 'fire';
+
+        return static::$dispatcher->$method($event, static::class);
     }
 
     /**
@@ -313,11 +309,10 @@ trait CacheableEloquent
      *
      * @return $this
      */
-    protected function resetCacheConfig()
+    public function resetCacheConfig()
     {
         $this->cacheDriver = null;
         $this->cacheLifetime = null;
-        $this->cacheClearEnabled = null;
 
         return $this;
     }
@@ -376,25 +371,25 @@ trait CacheableEloquent
     public function cacheQuery(Builder $builder, array $columns, Closure $closure)
     {
         $lifetime = $this->getCacheLifetime();
-        $model = get_class($builder->getModel());
+        $modelName = get_class($builder->getModel());
         $cacheKey = $this->generateCacheKey($builder, $columns);
 
         // Switch cache driver on runtime
         if ($driver = $this->getCacheDriver()) {
-            $this->getContainer('cache')->setDefaultDriver($driver);
+            static::getContainer('cache')->setDefaultDriver($driver);
         }
 
         // We need cache tags, check if default driver supports it
-        if (method_exists($this->getContainer('cache')->getStore(), 'tags')) {
-            $result = $lifetime === -1 ? $this->getContainer('cache')->tags($model)->rememberForever($cacheKey, $closure) : $this->getContainer('cache')->tags($model)->remember($cacheKey, $lifetime, $closure);
+        if (method_exists(static::getContainer('cache')->getStore(), 'tags')) {
+            $result = $lifetime === -1 ? static::getContainer('cache')->tags($modelName)->rememberForever($cacheKey, $closure) : static::getContainer('cache')->tags($modelName)->remember($cacheKey, $lifetime, $closure);
 
             return $result;
         }
 
-        $result = $lifetime === -1 ? $this->getContainer('cache')->rememberForever($cacheKey, $closure) : $this->getContainer('cache')->remember($cacheKey, $lifetime, $closure);
+        $result = $lifetime === -1 ? static::getContainer('cache')->rememberForever($cacheKey, $closure) : static::getContainer('cache')->remember($cacheKey, $lifetime, $closure);
 
         // Default cache driver doesn't support tags, let's do it manually
-        $this->storeCacheKey($model, $cacheKey);
+        static::storeCacheKey($modelName, $cacheKey);
 
         // We're done, let's clean up!
         $this->resetCacheConfig();
