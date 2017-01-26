@@ -283,8 +283,8 @@ trait CacheableEloquent
     /**
      * Fire the given event for the model.
      *
-     * @param  string  $event
-     * @param  bool  $halt
+     * @param string $event
+     * @param bool   $halt
      *
      * @return mixed
      */
