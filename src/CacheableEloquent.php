@@ -53,7 +53,7 @@ trait CacheableEloquent
     /**
      * Register an updated model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
