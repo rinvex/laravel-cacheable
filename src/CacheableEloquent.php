@@ -64,32 +64,29 @@ trait CacheableEloquent
     /**
      * Register an updated model event with the dispatcher.
      *
-     * @param \Closure|string $callback
-     * @param int             $priority
+     * @param  \Closure|string  $callback
      *
      * @return void
      */
-    abstract public static function updated($callback, $priority = 0);
+    abstract public static function updated($callback);
 
     /**
      * Register a created model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int             $priority
      *
      * @return void
      */
-    abstract public static function created($callback, $priority = 0);
+    abstract public static function created($callback);
 
     /**
      * Register a deleted model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int             $priority
      *
      * @return void
      */
-    abstract public static function deleted($callback, $priority = 0);
+    abstract public static function deleted($callback);
 
     /**
      * Forget model cache on create/update/delete.
