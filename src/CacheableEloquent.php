@@ -30,17 +30,6 @@ trait CacheableEloquent
     protected static $container;
 
     /**
-     * The methods to clear cache on.
-     *
-     * @var array
-     */
-    protected static $cacheClearOn = [
-        'create',
-        'update',
-        'delete',
-    ];
-
-    /**
      * Indicate if the model cache clear is enabled.
      *
      * @var bool
@@ -95,23 +84,7 @@ trait CacheableEloquent
      */
     public static function bootCacheableEloquent()
     {
-        static::updated(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled() && in_array('update', $cachedModel::$cacheClearOn)) {
-                $cachedModel::forgetCache();
-            }
-        });
-
-        static::created(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled() && in_array('create', $cachedModel::$cacheClearOn)) {
-                $cachedModel::forgetCache();
-            }
-        });
-
-        static::deleted(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled() && in_array('delete', $cachedModel::$cacheClearOn)) {
-                $cachedModel::forgetCache();
-            }
-        });
+        static::attacheEvents();
     }
 
     /**
@@ -404,5 +377,31 @@ trait CacheableEloquent
     public function newEloquentBuilder($query)
     {
         return new EloquentBuilder($query);
+    }
+
+    /**
+     * Attach events to the model.
+     *
+     * @return void
+     */
+    protected static function attacheEvents()
+    {
+        static::updated(function (Model $cachedModel) {
+            if ($cachedModel::isCacheClearEnabled()) {
+                $cachedModel::forgetCache();
+            }
+        });
+
+        static::created(function (Model $cachedModel) {
+            if ($cachedModel::isCacheClearEnabled()) {
+                $cachedModel::forgetCache();
+            }
+        });
+
+        static::deleted(function (Model $cachedModel) {
+            if ($cachedModel::isCacheClearEnabled()) {
+                $cachedModel::forgetCache();
+            }
+        });
     }
 }
