@@ -239,10 +239,10 @@ trait CacheableEloquent
 
         // Flush cache tags
         if (method_exists(static::getContainer('cache')->getStore(), 'tags')) {
-            static::getContainer('cache')->tags(static::class)->flush();
+            static::getContainer('cache')->tags(__CLASS__)->flush();
         } else {
             // Flush cache keys, then forget actual cache
-            foreach (static::flushCacheKeys(static::class) as $cacheKey) {
+            foreach (static::flushCacheKeys(__CLASS__) as $cacheKey) {
                 static::getContainer('cache')->forget($cacheKey);
             }
         }
@@ -267,11 +267,11 @@ trait CacheableEloquent
         // We will append the names of the class to the event to distinguish it from
         // other model events that are fired, allowing us to listen on each model
         // event set individually instead of catching event for all the models.
-        $event = "eloquent.{$event}: ".static::class;
+        $event = "eloquent.{$event}: ".__CLASS__;
 
         $method = $halt ? 'until' : 'fire';
 
-        return static::$dispatcher->$method($event, static::class);
+        return static::$dispatcher->$method($event, __CLASS__);
     }
 
     /**
