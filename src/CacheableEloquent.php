@@ -320,9 +320,9 @@ trait CacheableEloquent
         return md5(json_encode([
             $vars,
             $columns,
+            __CLASS__,
             $this->getCacheDriver(),
             $this->getCacheLifetime(),
-            get_class($builder->getModel()),
             $builder->getEagerLoads(),
             $builder->getBindings(),
             $builder->toSql(),
@@ -340,8 +340,8 @@ trait CacheableEloquent
      */
     public function cacheQuery(Builder $builder, array $columns, Closure $closure)
     {
+        $modelName = __CLASS__;
         $lifetime = $this->getCacheLifetime();
-        $modelName = get_class($builder->getModel());
         $cacheKey = $this->generateCacheKey($builder, $columns);
 
         // Switch cache driver on runtime
