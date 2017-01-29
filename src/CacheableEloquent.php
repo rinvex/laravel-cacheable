@@ -121,7 +121,7 @@ trait CacheableEloquent
      */
     protected static function storeCacheKey(string $modelName, string $cacheKey)
     {
-        $keysFile = storage_path('framework/cache/rinvex.cacheable.json');
+        $keysFile = storage_path('framework/cache/data/rinvex.cacheable.json');
         $cacheKeys = static::getCacheKeys($keysFile);
 
         if (! isset($cacheKeys[$modelName]) || ! in_array($cacheKey, $cacheKeys[$modelName])) {
@@ -156,7 +156,7 @@ trait CacheableEloquent
     protected static function flushCacheKeys(string $modelName): array
     {
         $flushedKeys = [];
-        $keysFile = storage_path('framework/cache/rinvex.cacheable.json');
+        $keysFile = storage_path('framework/cache/data/rinvex.cacheable.json');
         $cacheKeys = static::getCacheKeys($keysFile);
 
         if (isset($cacheKeys[$modelName])) {
