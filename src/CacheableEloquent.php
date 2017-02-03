@@ -18,17 +18,9 @@ namespace Rinvex\Cacheable;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Contracts\Container\Container;
 
 trait CacheableEloquent
 {
-    /**
-     * The IoC container instance.
-     *
-     * @var \Illuminate\Contracts\Container\Container
-     */
-    protected static $container;
-
     /**
      * Indicate if the model cache clear is enabled.
      *
@@ -85,30 +77,6 @@ trait CacheableEloquent
     public static function bootCacheableEloquent()
     {
         static::attacheEvents();
-    }
-
-    /**
-     * Set the IoC container instance.
-     *
-     * @param \Illuminate\Contracts\Container\Container $container
-     *
-     * @return void
-     */
-    public static function setContainer(Container $container)
-    {
-        static::$container = $container;
-    }
-
-    /**
-     * Get the IoC container instance or any of its services.
-     *
-     * @param string|null $service
-     *
-     * @return mixed
-     */
-    public static function getContainer($service = null)
-    {
-        return is_null($service) ? (static::$container ?: app()) : (static::$container[$service] ?: app($service));
     }
 
     /**
@@ -238,12 +206,12 @@ trait CacheableEloquent
         static::fireCacheFlushEvent('cache.flushing');
 
         // Flush cache tags
-        if (method_exists(static::getContainer('cache')->getStore(), 'tags')) {
-            static::getContainer('cache')->tags(__CLASS__)->flush();
+        if (method_exists(app('cache')->getStore(), 'tags')) {
+            app('cache')->tags(__CLASS__)->flush();
         } else {
             // Flush cache keys, then forget actual cache
             foreach (static::flushCacheKeys(__CLASS__) as $cacheKey) {
-                static::getContainer('cache')->forget($cacheKey);
+                app('cache')->forget($cacheKey);
             }
         }
 
@@ -346,17 +314,17 @@ trait CacheableEloquent
 
         // Switch cache driver on runtime
         if ($driver = $this->getCacheDriver()) {
-            static::getContainer('cache')->setDefaultDriver($driver);
+            app('cache')->setDefaultDriver($driver);
         }
 
         // We need cache tags, check if default driver supports it
-        if (method_exists(static::getContainer('cache')->getStore(), 'tags')) {
-            $result = $lifetime === -1 ? static::getContainer('cache')->tags($modelName)->rememberForever($cacheKey, $closure) : static::getContainer('cache')->tags($modelName)->remember($cacheKey, $lifetime, $closure);
+        if (method_exists(app('cache')->getStore(), 'tags')) {
+            $result = $lifetime === -1 ? app('cache')->tags($modelName)->rememberForever($cacheKey, $closure) : app('cache')->tags($modelName)->remember($cacheKey, $lifetime, $closure);
 
             return $result;
         }
 
-        $result = $lifetime === -1 ? static::getContainer('cache')->rememberForever($cacheKey, $closure) : static::getContainer('cache')->remember($cacheKey, $lifetime, $closure);
+        $result = $lifetime === -1 ? app('cache')->rememberForever($cacheKey, $closure) : app('cache')->remember($cacheKey, $lifetime, $closure);
 
         // Default cache driver doesn't support tags, let's do it manually
         static::storeCacheKey($modelName, $cacheKey);
