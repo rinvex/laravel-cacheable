@@ -207,10 +207,10 @@ trait CacheableEloquent
 
         // Flush cache tags
         if (method_exists(app('cache')->getStore(), 'tags')) {
-            app('cache')->tags(__CLASS__)->flush();
+            app('cache')->tags(static::class)->flush();
         } else {
             // Flush cache keys, then forget actual cache
-            foreach (static::flushCacheKeys(__CLASS__) as $cacheKey) {
+            foreach (static::flushCacheKeys(static::class) as $cacheKey) {
                 app('cache')->forget($cacheKey);
             }
         }
@@ -235,11 +235,11 @@ trait CacheableEloquent
         // We will append the names of the class to the event to distinguish it from
         // other model events that are fired, allowing us to listen on each model
         // event set individually instead of catching event for all the models.
-        $event = "eloquent.{$event}: ".__CLASS__;
+        $event = "eloquent.{$event}: ".static::class;
 
         $method = $halt ? 'until' : 'fire';
 
-        return static::$dispatcher->$method($event, __CLASS__);
+        return static::$dispatcher->$method($event, static::class);
     }
 
     /**
@@ -288,7 +288,7 @@ trait CacheableEloquent
         return md5(json_encode([
             $vars,
             $columns,
-            __CLASS__,
+            static::class,
             $this->getCacheDriver(),
             $this->getCacheLifetime(),
             $builder->getEagerLoads(),
@@ -308,7 +308,7 @@ trait CacheableEloquent
      */
     public function cacheQuery(Builder $builder, array $columns, Closure $closure)
     {
-        $modelName = __CLASS__;
+        $modelName = static::class;
         $lifetime = $this->getCacheLifetime();
         $cacheKey = $this->generateCacheKey($builder, $columns);
 
