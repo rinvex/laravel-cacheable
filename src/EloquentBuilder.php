@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Rinvex\Cacheable;
 
 use Illuminate\Database\Eloquent\Builder;
