@@ -269,22 +269,22 @@ trait CacheableEloquent
     {
         $query = $builder->getQuery();
         $vars = [
-            'aggregate'   => $query->aggregate,
-            'columns'     => $query->columns,
-            'distinct'    => $query->distinct,
-            'from'        => $query->from,
-            'joins'       => $query->joins,
-            'wheres'      => $query->wheres,
-            'groups'      => $query->groups,
-            'havings'     => $query->havings,
-            'orders'      => $query->orders,
-            'limit'       => $query->limit,
-            'offset'      => $query->offset,
-            'unions'      => $query->unions,
-            'unionLimit'  => $query->unionLimit,
+            'aggregate' => $query->aggregate,
+            'columns' => $query->columns,
+            'distinct' => $query->distinct,
+            'from' => $query->from,
+            'joins' => $query->joins,
+            'wheres' => $query->wheres,
+            'groups' => $query->groups,
+            'havings' => $query->havings,
+            'orders' => $query->orders,
+            'limit' => $query->limit,
+            'offset' => $query->offset,
+            'unions' => $query->unions,
+            'unionLimit' => $query->unionLimit,
             'unionOffset' => $query->unionOffset,
             'unionOrders' => $query->unionOrders,
-            'lock'        => $query->lock,
+            'lock' => $query->lock,
         ];
 
         return md5(json_encode([
