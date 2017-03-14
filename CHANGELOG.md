@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
-## v0.2.0 - 2017-03-14
+## [v0.2.0] - 2017-03-14
 - Tweak and enhance forget cache mechanism
 - Update composer dependencies
 - Restrict compatibility to Laravel 5.4
