@@ -72,7 +72,7 @@ trait CacheableEloquent
     abstract public static function deleted($callback);
 
     /**
-     * Forget model cache on create/update/delete.
+     * Boot the cacheable eloquent trait for a model.
      *
      * @return void
      */
