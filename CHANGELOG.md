@@ -19,4 +19,4 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-01-18
 - Release first tagged beta
 
-[v0.0.2]: https://github.com/rinvex/cacheable/compare/v0.0.1...0.0.2
+[v0.0.2]: https://github.com/rinvex/cacheable/compare/v0.0.1...v0.0.2
