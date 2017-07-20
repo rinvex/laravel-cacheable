@@ -50,8 +50,8 @@ class EloquentBuilder extends Builder
     /**
      * Get an array with the values of a given column.
      *
-     * @param  string  $column
-     * @param  string|null  $key
+     * @param string      $column
+     * @param string|null $key
      *
      * @return \Illuminate\Support\Collection
      */
