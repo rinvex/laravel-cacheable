@@ -247,14 +247,14 @@ trait CacheableEloquent
     /**
      * Generate unique cache key.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param array                                 $columns
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $builder
+     * @param array                                                                    $columns
      *
      * @return string
      */
-    protected function generateCacheKey(Builder $builder, array $columns)
+    protected function generateCacheKey($builder, array $columns)
     {
-        $query = $builder->getQuery();
+        $query = $builder instanceof Builder ? $builder->getQuery() : $builder;
         $vars = [
             'aggregate' => $query->aggregate,
             'columns' => $query->columns,
@@ -280,7 +280,7 @@ trait CacheableEloquent
             static::class,
             $this->getCacheDriver(),
             $this->getCacheLifetime(),
-            $builder->getEagerLoads(),
+            $builder instanceof Builder ? $builder->getEagerLoads() : null,
             $builder->getBindings(),
             $builder->toSql(),
         ]));
@@ -289,13 +289,13 @@ trait CacheableEloquent
     /**
      * Cache given callback.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param array                                 $columns
-     * @param \Closure                              $closure
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $builder
+     * @param array                                                                    $columns
+     * @param \Closure                                                                 $closure
      *
      * @return mixed
      */
-    public function cacheQuery(Builder $builder, array $columns, Closure $closure)
+    public function cacheQuery($builder, array $columns, Closure $closure)
     {
         $modelName = static::class;
         $lifetime = $this->getCacheLifetime();
