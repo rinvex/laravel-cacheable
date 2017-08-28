@@ -132,7 +132,7 @@ trait CacheableEloquent
      *
      * @param float|int $cacheLifetime
      *
-     * @return $this
+     * @return static
      */
     public function setCacheLifetime($cacheLifetime)
     {
@@ -156,7 +156,7 @@ trait CacheableEloquent
      *
      * @param string $cacheDriver
      *
-     * @return $this
+     * @return static
      */
     public function setCacheDriver($cacheDriver)
     {
@@ -234,7 +234,7 @@ trait CacheableEloquent
     /**
      * Reset cached model to its defaults.
      *
-     * @return $this
+     * @return static
      */
     public function resetCacheConfig()
     {
