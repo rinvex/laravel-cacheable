@@ -110,7 +110,12 @@ trait CacheableEloquent
     protected static function getCacheKeys($file)
     {
         if (! file_exists($file)) {
-            file_put_contents($file, null);
+            $cacheFolder = storage_path('framework/cache/data/');
+            if (!file_exists($cacheFolder)) {
+                mkdir($cacheFolder);
+            }
+
+            touch($file);
         }
 
         return json_decode(file_get_contents($file), true) ?: [];
