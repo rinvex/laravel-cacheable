@@ -111,7 +111,7 @@ trait CacheableEloquent
     {
         if (! file_exists($file)) {
             $cacheFolder = storage_path('framework/cache/data/');
-            if (!file_exists($cacheFolder)) {
+            if (! file_exists($cacheFolder)) {
                 mkdir($cacheFolder);
             }
 
