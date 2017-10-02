@@ -11,7 +11,7 @@ class BelongsToMany extends BaseBelongsToMany
     /**
      * Execute the query as a "select" statement.
      *
-     * @param  array $columns
+     * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
