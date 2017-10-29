@@ -3,7 +3,6 @@
 **Rinvex Cacheable** is a granular, intuitive, and fluent caching system for eloquent models. Simple, but yet powerful, plug-n-play with no hassle.
 
 [![Packagist](https://img.shields.io/packagist/v/rinvex/cacheable.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/cacheable)
-[![VersionEye Dependencies](https://img.shields.io/versioneye/d/php/rinvex:cacheable.svg?label=Dependencies&style=flat-square)](https://www.versioneye.com/php/rinvex:cacheable/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/cacheable.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/cacheable/)
 [![Code Climate](https://img.shields.io/codeclimate/github/rinvex/cacheable.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/cacheable)
 [![Travis](https://img.shields.io/travis/rinvex/cacheable.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/cacheable)
