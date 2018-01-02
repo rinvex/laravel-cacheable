@@ -40,7 +40,7 @@
         }
     ],
     "require": {
-        "php": "^7.0.0",
+        "php": "^7.1.0",
         "illuminate/cache": "~5.5.0",
         "illuminate/database": "~5.5.0",
         "illuminate/contracts": "~5.5.0",
