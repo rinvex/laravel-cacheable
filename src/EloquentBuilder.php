@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rinvex\Cacheable;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -55,7 +56,7 @@ class EloquentBuilder extends Builder
      *
      * @return \Illuminate\Support\Collection
      */
-    public function pluck($column, $key = null)
+    public function pluck($column, $key = null): Collection
     {
         $builder = $this->toBase();
 

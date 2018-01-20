@@ -27,7 +27,7 @@ trait CacheableEloquent
     /**
      * The model cache lifetime.
      *
-     * @var float|int
+     * @var int
      */
     protected $cacheLifetime = -1;
 
@@ -130,11 +130,11 @@ trait CacheableEloquent
     /**
      * Set the model cache lifetime.
      *
-     * @param float|int $cacheLifetime
+     * @param int $cacheLifetime
      *
      * @return $this
      */
-    public function setCacheLifetime($cacheLifetime)
+    public function setCacheLifetime(int $cacheLifetime)
     {
         $this->cacheLifetime = $cacheLifetime;
 
@@ -144,9 +144,9 @@ trait CacheableEloquent
     /**
      * Get the model cache lifetime.
      *
-     * @return float|int
+     * @return int
      */
-    public function getCacheLifetime()
+    public function getCacheLifetime(): int
     {
         return $this->cacheLifetime;
     }
@@ -170,7 +170,7 @@ trait CacheableEloquent
      *
      * @return string
      */
-    public function getCacheDriver()
+    public function getCacheDriver(): ?string
     {
         return $this->cacheDriver;
     }
@@ -252,7 +252,7 @@ trait CacheableEloquent
      *
      * @return string
      */
-    protected function generateCacheKey($builder, array $columns)
+    protected function generateCacheKey($builder, array $columns): string
     {
         $query = $builder instanceof Builder ? $builder->getQuery() : $builder;
         $vars = [
