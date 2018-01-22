@@ -146,7 +146,7 @@ trait CacheableEloquent
      *
      * @return int
      */
-    public function getCacheLifetime(): int
+    public function getCacheLifetime(): ?int
     {
         return $this->cacheLifetime;
     }
