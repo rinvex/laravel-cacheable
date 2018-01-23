@@ -239,7 +239,7 @@ trait CacheableEloquent
     public function resetCacheConfig()
     {
         $this->cacheDriver = null;
-        $this->cacheLifetime = null;
+        $this->cacheLifetime = -1;
 
         return $this;
     }
