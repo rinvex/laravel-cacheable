@@ -63,9 +63,19 @@ trait CacheableEloquent
      *
      * @return void
      */
-    public static function bootCacheableEloquent()
+    public static function bootCacheableEloquent(): void
     {
-        static::attacheEvents();
+        static::updated(function (Model $cachedModel) {
+            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+        });
+
+        static::created(function (Model $cachedModel) {
+            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+        });
+
+        static::deleted(function (Model $cachedModel) {
+            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+        });
     }
 
     /**
@@ -76,7 +86,7 @@ trait CacheableEloquent
      *
      * @return void
      */
-    protected static function storeCacheKey(string $modelName, string $cacheKey)
+    protected static function storeCacheKey(string $modelName, string $cacheKey): void
     {
         $keysFile = storage_path('framework/cache/data/rinvex.cacheable.json');
         $cacheKeys = static::getCacheKeys($keysFile);
@@ -94,7 +104,7 @@ trait CacheableEloquent
      *
      * @return array
      */
-    protected static function getCacheKeys($file)
+    protected static function getCacheKeys($file): array
     {
         if (! file_exists($file)) {
             file_put_contents($file, null);
@@ -297,7 +307,7 @@ trait CacheableEloquent
      */
     public function cacheQuery($builder, array $columns, Closure $closure)
     {
-        $modelName = static::class;
+        $modelName = $this->getMorphClass();
         $lifetime = $this->getCacheLifetime();
         $cacheKey = $this->generateCacheKey($builder, $columns);
 
@@ -334,31 +344,5 @@ trait CacheableEloquent
     public function newEloquentBuilder($query)
     {
         return new EloquentBuilder($query);
-    }
-
-    /**
-     * Attach events to the model.
-     *
-     * @return void
-     */
-    protected static function attacheEvents()
-    {
-        static::updated(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled()) {
-                $cachedModel::forgetCache();
-            }
-        });
-
-        static::created(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled()) {
-                $cachedModel::forgetCache();
-            }
-        });
-
-        static::deleted(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled()) {
-                $cachedModel::forgetCache();
-            }
-        });
     }
 }
