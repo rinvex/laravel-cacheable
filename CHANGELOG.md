@@ -17,6 +17,6 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 - Fix stupid gitattributes export-ignore issues
 
 ## v0.0.1 - 2017-01-18
-- Release first tagged beta
+- Tag first release
 
 [v0.0.2]: https://github.com/rinvex/cacheable/compare/v0.0.1...v0.0.2
