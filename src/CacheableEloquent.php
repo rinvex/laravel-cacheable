@@ -1,18 +1,5 @@
 <?php
 
-/*
- * NOTICE OF LICENSE
- *
- * Part of the Rinvex Cacheable Package.
- *
- * This source file is subject to The MIT License (MIT)
- * that is bundled with this package in the LICENSE file.
- *
- * Package: Rinvex Cacheable Package
- * License: The MIT License (MIT)
- * Link:    https://rinvex.com
- */
-
 declare(strict_types=1);
 
 namespace Rinvex\Cacheable;
@@ -40,7 +27,7 @@ trait CacheableEloquent
     /**
      * The model cache lifetime.
      *
-     * @var float|int
+     * @var int
      */
     protected $cacheLifetime = -1;
 
@@ -72,13 +59,23 @@ trait CacheableEloquent
     abstract public static function deleted($callback);
 
     /**
-     * Forget model cache on create/update/delete.
+     * Boot the cacheable eloquent trait for a model.
      *
      * @return void
      */
-    public static function bootCacheableEloquent()
+    public static function bootCacheableEloquent(): void
     {
-        static::attacheEvents();
+        static::updated(function (Model $cachedModel) {
+            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+        });
+
+        static::created(function (Model $cachedModel) {
+            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+        });
+
+        static::deleted(function (Model $cachedModel) {
+            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+        });
     }
 
     /**
@@ -89,7 +86,7 @@ trait CacheableEloquent
      *
      * @return void
      */
-    protected static function storeCacheKey(string $modelName, string $cacheKey)
+    protected static function storeCacheKey(string $modelName, string $cacheKey): void
     {
         $keysFile = storage_path('framework/cache/data/rinvex.cacheable.json');
         $cacheKeys = static::getCacheKeys($keysFile);
@@ -107,7 +104,7 @@ trait CacheableEloquent
      *
      * @return array
      */
-    protected static function getCacheKeys($file)
+    protected static function getCacheKeys($file): array
     {
         if (! file_exists($file)) {
             file_put_contents($file, null);
@@ -143,11 +140,11 @@ trait CacheableEloquent
     /**
      * Set the model cache lifetime.
      *
-     * @param float|int $cacheLifetime
+     * @param int $cacheLifetime
      *
      * @return $this
      */
-    public function setCacheLifetime($cacheLifetime)
+    public function setCacheLifetime(int $cacheLifetime)
     {
         $this->cacheLifetime = $cacheLifetime;
 
@@ -157,9 +154,9 @@ trait CacheableEloquent
     /**
      * Get the model cache lifetime.
      *
-     * @return float|int
+     * @return int
      */
-    public function getCacheLifetime()
+    public function getCacheLifetime(): int
     {
         return $this->cacheLifetime;
     }
@@ -183,7 +180,7 @@ trait CacheableEloquent
      *
      * @return string
      */
-    public function getCacheDriver()
+    public function getCacheDriver(): ?string
     {
         return $this->cacheDriver;
     }
@@ -252,7 +249,7 @@ trait CacheableEloquent
     public function resetCacheConfig()
     {
         $this->cacheDriver = null;
-        $this->cacheLifetime = null;
+        $this->cacheLifetime = -1;
 
         return $this;
     }
@@ -260,14 +257,14 @@ trait CacheableEloquent
     /**
      * Generate unique cache key.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param array                                 $columns
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $builder
+     * @param array                                                                    $columns
      *
      * @return string
      */
-    protected function generateCacheKey(Builder $builder, array $columns)
+    protected function generateCacheKey($builder, array $columns): string
     {
-        $query = $builder->getQuery();
+        $query = $builder instanceof Builder ? $builder->getQuery() : $builder;
         $vars = [
             'aggregate' => $query->aggregate,
             'columns' => $query->columns,
@@ -293,7 +290,7 @@ trait CacheableEloquent
             static::class,
             $this->getCacheDriver(),
             $this->getCacheLifetime(),
-            $builder->getEagerLoads(),
+            $builder instanceof Builder ? $builder->getEagerLoads() : null,
             $builder->getBindings(),
             $builder->toSql(),
         ]));
@@ -302,15 +299,15 @@ trait CacheableEloquent
     /**
      * Cache given callback.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param array                                 $columns
-     * @param \Closure                              $closure
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $builder
+     * @param array                                                                    $columns
+     * @param \Closure                                                                 $closure
      *
      * @return mixed
      */
-    public function cacheQuery(Builder $builder, array $columns, Closure $closure)
+    public function cacheQuery($builder, array $columns, Closure $closure)
     {
-        $modelName = static::class;
+        $modelName = $this->getMorphClass();
         $lifetime = $this->getCacheLifetime();
         $cacheKey = $this->generateCacheKey($builder, $columns);
 
@@ -347,31 +344,5 @@ trait CacheableEloquent
     public function newEloquentBuilder($query)
     {
         return new EloquentBuilder($query);
-    }
-
-    /**
-     * Attach events to the model.
-     *
-     * @return void
-     */
-    protected static function attacheEvents()
-    {
-        static::updated(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled()) {
-                $cachedModel::forgetCache();
-            }
-        });
-
-        static::created(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled()) {
-                $cachedModel::forgetCache();
-            }
-        });
-
-        static::deleted(function (Model $cachedModel) {
-            if ($cachedModel::isCacheClearEnabled()) {
-                $cachedModel::forgetCache();
-            }
-        });
     }
 }
