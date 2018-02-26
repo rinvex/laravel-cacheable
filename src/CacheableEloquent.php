@@ -11,27 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 trait CacheableEloquent
 {
     /**
-     * Indicate if the model cache clear is enabled.
-     *
-     * @var bool
-     */
-    protected static $cacheClearEnabled = true;
-
-    /**
-     * The model cache driver.
-     *
-     * @var string
-     */
-    protected $cacheDriver;
-
-    /**
-     * The model cache lifetime.
-     *
-     * @var int
-     */
-    protected $cacheLifetime = -1;
-
-    /**
      * Register an updated model event with the dispatcher.
      *
      * @param \Closure|string $callback
@@ -66,15 +45,15 @@ trait CacheableEloquent
     public static function bootCacheableEloquent(): void
     {
         static::updated(function (Model $cachedModel) {
-            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+            ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
         });
 
         static::created(function (Model $cachedModel) {
-            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+            ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
         });
 
         static::deleted(function (Model $cachedModel) {
-            ! $cachedModel::isCacheClearEnabled() || $cachedModel::forgetCache();
+            ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
         });
     }
 
@@ -158,7 +137,7 @@ trait CacheableEloquent
      */
     public function getCacheLifetime(): int
     {
-        return $this->cacheLifetime;
+        return $this->cacheLifetime ?? -1;
     }
 
     /**
@@ -178,11 +157,11 @@ trait CacheableEloquent
     /**
      * Get the model cache driver.
      *
-     * @return string
+     * @return string|null
      */
     public function getCacheDriver(): ?string
     {
-        return $this->cacheDriver;
+        return $this->cacheDriver ?? null;
     }
 
     /**
@@ -190,9 +169,9 @@ trait CacheableEloquent
      *
      * @return bool
      */
-    public static function isCacheClearEnabled()
+    public function isCacheClearEnabled(): bool
     {
-        return static::$cacheClearEnabled;
+        return $this->cacheClearEnabled ?? false;
     }
 
     /**
