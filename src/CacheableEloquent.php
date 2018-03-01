@@ -171,7 +171,7 @@ trait CacheableEloquent
      */
     public function isCacheClearEnabled(): bool
     {
-        return $this->cacheClearEnabled ?? false;
+        return $this->cacheClearEnabled ?? true;
     }
 
     /**
@@ -227,8 +227,8 @@ trait CacheableEloquent
      */
     public function resetCacheConfig()
     {
-        $this->cacheDriver = null;
-        $this->cacheLifetime = -1;
+        ! $this->cacheDriver || $this->cacheDriver = null;
+        ! $this->cacheLifetime || $this->cacheLifetime = -1;
 
         return $this;
     }
