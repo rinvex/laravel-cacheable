@@ -86,6 +86,8 @@ trait CacheableEloquent
     protected static function getCacheKeys($file): array
     {
         if (! file_exists($file)) {
+            $dir = dirname($file);
+            is_dir($dir) || mkdir($dir);
             file_put_contents($file, null);
         }
 
