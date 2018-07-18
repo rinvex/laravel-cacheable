@@ -219,7 +219,7 @@ trait CacheableEloquent
 
         $method = $halt ? 'until' : 'fire';
 
-        return static::$dispatcher->$method($event, static::class);
+        return static::$dispatcher->{$method}($event, static::class);
     }
 
     /**
