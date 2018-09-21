@@ -26,6 +26,34 @@ What this package do -technically- caching eloquent query passing through the `g
 Check the [`CacheableEloquent`](src/CacheableEloquent.php) source code for more awesome stuff if you need advanced control.
 
 
+## Optional Features
+
+You can optionally override model caching behaviour per model as follows:
+
+```php
+    /**
+     * Indicate if the model cache clear is enabled.
+     *
+     * @var bool
+     */
+    protected $cacheClearEnabled = true;
+
+    /**
+     * The model cache driver.
+     *
+     * @var string
+     */
+    protected $cacheDriver = 'memcached';
+
+    /**
+     * The model cache lifetime.
+     *
+     * @var int
+     */
+    protected $cacheLifetime = -1;
+```
+
+
 ## Changelog
 
 Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
