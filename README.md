@@ -2,12 +2,12 @@
 
 **Rinvex Cacheable** is a granular, intuitive, and fluent caching system for eloquent models. Simple, but yet powerful, plug-n-play with no hassle.
 
-[![Packagist](https://img.shields.io/packagist/v/rinvex/cacheable.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/cacheable)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/cacheable.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/cacheable/)
-[![Code Climate](https://img.shields.io/codeclimate/github/rinvex/cacheable.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/cacheable)
-[![Travis](https://img.shields.io/travis/rinvex/cacheable.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/cacheable)
+[![Packagist](https://img.shields.io/packagist/v/rinvex/laravel-cacheable.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/laravel-cacheable)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/laravel-cacheable.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/laravel-cacheable/)
+[![Code Climate](https://img.shields.io/codeclimate/github/rinvex/laravel-cacheable.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/laravel-cacheable)
+[![Travis](https://img.shields.io/travis/rinvex/laravel-cacheable.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/laravel-cacheable)
 [![StyleCI](https://styleci.io/repos/79321486/shield)](https://styleci.io/repos/79321486)
-[![License](https://img.shields.io/packagist/l/rinvex/cacheable.svg?label=License&style=flat-square)](https://github.com/rinvex/cacheable/blob/develop/LICENSE)
+[![License](https://img.shields.io/packagist/l/rinvex/laravel-cacheable.svg?label=License&style=flat-square)](https://github.com/rinvex/laravel-cacheable/blob/develop/LICENSE)
 
 What this package do -technically- caching eloquent query passing through the `get` method, whatever it is and it's smart enough to indicated any conditions, limit, offset, wheres, orders, groups, ..etc and take that criteria into account when caching and checking for cached version. Also by default any create, update, or delete event will flush all cache for that specific model. It uses default Laravel caching system, and utilizes whatever cache driver you are using. Awesome, right?
 
@@ -16,7 +16,7 @@ What this package do -technically- caching eloquent query passing through the `g
 
 1. Install the package via composer:
     ```shell
-    composer require rinvex/cacheable
+    composer require rinvex/laravel-cacheable
     ```
 
 2. Use the `\Rinvex\Cacheable\CacheableEloquent` in your desired model, and you're done!

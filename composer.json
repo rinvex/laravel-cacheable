@@ -1,6 +1,7 @@
 {
-    "name": "rinvex/cacheable",
+    "name": "rinvex/laravel-cacheable",
     "description": "Rinvex Cacheable is a granular, intuitive, and fluent caching system for eloquent models. Simple, but yet powerful, plug-n-play with no hassle.",
+    "type": "library",
     "keywords": [
         "trait",
         "model",
@@ -18,9 +19,9 @@
     "homepage": "https://rinvex.com",
     "support": {
         "email": "help@rinvex.com",
-        "issues": "https://github.com/rinvex/cacheable/issues",
-        "source": "https://github.com/rinvex/cacheable",
-        "docs": "https://github.com/rinvex/cacheable/blob/master/README.md"
+        "issues": "https://github.com/rinvex/laravel-cacheable/issues",
+        "source": "https://github.com/rinvex/laravel-cacheable",
+        "docs": "https://github.com/rinvex/laravel-cacheable/blob/master/README.md"
     },
     "authors": [
         {
@@ -36,18 +37,18 @@
         },
         {
             "name": "The Generous Laravel Community",
-            "homepage": "https://github.com/rinvex/cacheable/contributors"
+            "homepage": "https://github.com/rinvex/laravel-cacheable/contributors"
         }
     ],
     "require": {
         "php": "^7.1.3",
-        "illuminate/cache": "~5.6.0",
-        "illuminate/contracts": "~5.6.0",
-        "illuminate/database": "~5.6.0"
+        "illuminate/cache": "~5.7.0",
+        "illuminate/contracts": "~5.7.0",
+        "illuminate/database": "~5.7.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.19.0",
-        "illuminate/container": "~5.6.0",
+        "codedungeon/phpunit-result-printer": "^0.22.0",
+        "illuminate/container": "~5.7.0",
         "phpunit/phpunit": "^7.0.0"
     },
     "autoload": {
@@ -60,15 +61,13 @@
             "Rinvex\\Cacheable\\Tests\\": "tests"
         }
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
         "optimize-autoloader": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
