@@ -47,7 +47,7 @@
         "illuminate/database": "~5.7.0"
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.22.0",
+        "codedungeon/phpunit-result-printer": "^0.23.0",
         "illuminate/container": "~5.7.0",
         "phpunit/phpunit": "^7.0.0"
     },
