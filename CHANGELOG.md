@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.0.1] - 2019-03-06
+- Bug fix: Replace fire function by dispatch
+
 ## [v2.0.0] - 2019-03-03
 - Rename environment variable QUEUE_DRIVER to QUEUE_CONNECTION
 - Require PHP 7.2 & Laravel 5.8
@@ -57,6 +60,7 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-01-18
 - Tag first release
 
+[v2.0.1]: https://github.com/rinvex/laravel-cacheable/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/rinvex/laravel-cacheable/compare/v1.0.1...v2.0.0
 [v1.0.1]: https://github.com/rinvex/laravel-cacheable/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/rinvex/laravel-cacheable/compare/v0.0.4...v1.0.0
