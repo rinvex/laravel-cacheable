@@ -217,7 +217,7 @@ trait CacheableEloquent
         // event set individually instead of catching event for all the models.
         $event = "eloquent.{$event}: ".static::class;
 
-        $method = $halt ? 'until' : 'fire';
+        $method = $halt ? 'until' : 'dispatch';
 
         return static::$dispatcher->{$method}($event, static::class);
     }
