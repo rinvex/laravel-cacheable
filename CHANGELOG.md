@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v2.1.0] - 2019-06-02
+- Update composer deps
+- Drop PHP 7.1 travis test
+
 ## [v2.0.2] - 2019-03-08
 - Bug fix: Replace fire function by dispatch (for real!) [close #27]
 
