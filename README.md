@@ -4,7 +4,6 @@
 
 [![Packagist](https://img.shields.io/packagist/v/rinvex/laravel-cacheable.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/laravel-cacheable)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/laravel-cacheable.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/laravel-cacheable/)
-[![Code Climate](https://img.shields.io/codeclimate/github/rinvex/laravel-cacheable.svg?label=CodeClimate&style=flat-square)](https://codeclimate.com/github/rinvex/laravel-cacheable)
 [![Travis](https://img.shields.io/travis/rinvex/laravel-cacheable.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/laravel-cacheable)
 [![StyleCI](https://styleci.io/repos/79321486/shield)](https://styleci.io/repos/79321486)
 [![License](https://img.shields.io/packagist/l/rinvex/laravel-cacheable.svg?label=License&style=flat-square)](https://github.com/rinvex/laravel-cacheable/blob/develop/LICENSE)
