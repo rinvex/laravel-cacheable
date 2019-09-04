@@ -42,13 +42,13 @@
     ],
     "require": {
         "php": "^7.2.0",
-        "illuminate/cache": "~5.8.0",
-        "illuminate/contracts": "~5.8.0",
-        "illuminate/database": "~5.8.0"
+        "illuminate/cache": "~5.8.0|~6.0.0",
+        "illuminate/contracts": "~5.8.0|~6.0.0",
+        "illuminate/database": "~5.8.0|~6.0.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.0",
-        "illuminate/container": "~5.8.0",
+        "illuminate/container": "~5.8.0|~6.0.0",
         "phpunit/phpunit": "^8.1.0"
     },
     "autoload": {
